@@ -18,6 +18,9 @@
 <!--		SonarQube User Tokan-->
 		<sonar.login>squ_da8c4a232c703d2e4578009e4e7ed1c2b548dd87</sonar.login>
 
+<!--		Sonar Cloud-->
+		<sonar.organization>developer-suraj</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
