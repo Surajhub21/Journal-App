@@ -1,8 +1,12 @@
 package com.developersuraj.journalApp.controller;
 
+import com.developersuraj.journalApp.apiResponse.NewsApiPOJO;
+import com.developersuraj.journalApp.apiResponse.WeatherAPIResponsePOJO;
 import com.developersuraj.journalApp.entity.UserEntity;
 import com.developersuraj.journalApp.repository.UserEntryRepository;
+import com.developersuraj.journalApp.service.NewsAPIService;
 import com.developersuraj.journalApp.service.UserEntryService;
+import com.developersuraj.journalApp.service.WeatherAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,12 @@ public class UserEntryController {
     private UserEntryService userEntryService;
     @Autowired
     private UserEntryRepository userEntryRepository;
+
+    @Autowired
+    private WeatherAPIService weatherAPIService;
+
+    @Autowired
+    private NewsAPIService newsAPIService;
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody UserEntity user) {
@@ -46,5 +56,17 @@ public class UserEntryController {
     }
 
 
+    @GetMapping()
+    public ResponseEntity<?> getting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherAPIResponsePOJO weatherAPIResponsePOJO = weatherAPIService.getWeather("Mumbai");
+        NewsApiPOJO newsApiPOJO = newsAPIService.getNews();
+
+        String message = "";
+        if(weatherAPIResponsePOJO != null && newsApiPOJO != null){
+            message = "Hi "+ authentication.getName() + ", Weather feels like \n"+ weatherAPIService.getWeather("Mumbai") + "\nToday top news is :- "+ newsAPIService.getNews();
+        }
+        return new ResponseEntity<>(message , HttpStatus.OK);
+    }
+
 }
-//20:00

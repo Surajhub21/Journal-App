@@ -20,11 +20,12 @@ public class UserEntity {
     @Indexed(unique = true) // For every unique userName/It automatically does not create a uniqe one we have to create it
     @NonNull
     private String userName;
+    private String email;
+    private boolean sentimentAnalysis;
     @NonNull
     private String password;
     @DBRef //Work as a forging key it holds the address of other data's id
     private List<JournalEntry> journalEntries = new ArrayList<>();
-
     //Roles :- what the user authorized to do.
     private List<String> roles;
 
